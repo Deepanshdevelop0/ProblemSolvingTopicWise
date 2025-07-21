@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class DfsImpl {
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
 
         int V = 9; // total number of vertices (0 to 8)
 
@@ -40,11 +40,41 @@ public class DfsImpl {
         adj.get(7).add(8);
         adj.get(8).add(7);
 
-        ArrayList<Integer> ans = dfsOfGraph(adj);
+        ArrayList<Integer> ans = dfsOfGraph1(adj);
         int n = ans.size();
         for (int i = 0; i < n; i++) {
             System.out.print(ans.get(i) + " ");
         }
+    }
+
+    public static ArrayList<Integer> dfsOfGraph1(ArrayList<ArrayList<Integer>> adj) {
+
+        int v = adj.size();
+
+        ArrayList<Integer> res = new ArrayList<>();
+
+        boolean[] visited = new boolean[v+1];
+
+        visited[1] = true;
+
+        dfs1(1, visited, res, adj);
+
+        return res;
+    }
+
+    public static void dfs1(int curr, boolean[] visited, ArrayList<Integer> res, ArrayList<ArrayList<Integer>> adj) {
+
+        List<Integer> currAdjList = adj.get(curr);
+
+        visited[curr] = true;
+        res.add(curr);
+
+        for (int i : currAdjList) {
+            if (!visited[i]) {
+                dfs1(i, visited, res, adj);
+            }
+        }
+
     }
 
     public static ArrayList<Integer> dfsOfGraph(ArrayList<ArrayList<Integer>> adj) {
