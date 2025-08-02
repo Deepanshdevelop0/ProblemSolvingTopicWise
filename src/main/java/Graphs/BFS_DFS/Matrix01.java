@@ -3,6 +3,7 @@ package Graphs.BFS_DFS;
 import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Queue;
+import java.util.Stack;
 
 public class Matrix01 {
 
@@ -14,6 +15,7 @@ public class Matrix01 {
                 {0,1,0},
                 {0,0,0}
         };
+        Stack<Integer> st = new Stack<>();
 
         Arrays.asList(updateMatrix(mat)).forEach(i -> {
             for (int i1 : i) {
