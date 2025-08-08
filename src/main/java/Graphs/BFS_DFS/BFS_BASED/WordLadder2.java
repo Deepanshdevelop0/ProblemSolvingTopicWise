@@ -1,4 +1,4 @@
-package Graphs.BFS_DFS;
+package Graphs.BFS_DFS.BFS_BASED;
 
 import java.util.*;
 
@@ -7,14 +7,17 @@ public class WordLadder2 {
     public static void main(String[] args) {
 
         String beginWord = "hit", endWord = "cog";
-        List<String> wordList = List.of("hot","dot","dog","lot","log","cog");
+        List<String> wordList2 = List.of("hot","dot","dog","lot","log","cog");
         List<String> wordList1 = List.of("hot","dot","dog","lot","log");
+        List<String> wordList = List.of("des", "der", "dfr", "dgt", "dfs");
 
-        System.out.println(ladderLength(beginWord, endWord, wordList));
+        String startWord = "der", targetWord = "dfs";
+
+        System.out.println(findLadders(startWord, targetWord, wordList));
 
     }
 
-    public static List<List<String>> ladderLength(String beginWord, String endWord, List<String> wordList) {
+    public static List<List<String>> findLadders(String beginWord, String endWord, List<String> wordList) {
 
         Set<String> wordSet = new HashSet<>(wordList);
         Set<String> visitedSet = new HashSet<>();
@@ -42,6 +45,8 @@ public class WordLadder2 {
         currList.add(word);
 
         if (word.equals(endWord)) {
+            wordSet.add(endWord);
+            visitedSet.remove(endWord);
             res.add(new ArrayList<>(currList));
             return;
         }
@@ -58,6 +63,7 @@ public class WordLadder2 {
                 if (wordSet.contains(temp)) {
                     wordSet.remove(temp);
                     possibilities.add(new Pair(temp, steps+1));
+                    if (temp.equals(endWord)) break;
                 }
 
             }
@@ -68,6 +74,7 @@ public class WordLadder2 {
             if (!visitedSet.contains(pair.word)) {
                 visitedSet.add(pair.word);
                 dfs(pair, endWord, visitedSet, wordSet, currList, res);
+                currList.remove(currList.size() - 1);
             }
         }
 

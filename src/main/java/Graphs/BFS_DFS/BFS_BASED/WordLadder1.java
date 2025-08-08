@@ -1,8 +1,10 @@
-package Graphs.BFS_DFS;
+package Graphs.BFS_DFS.BFS_BASED;
 
 import java.util.*;
 
 public class WordLadder1 {
+
+
 
     public static void main(String[] args) {
 
