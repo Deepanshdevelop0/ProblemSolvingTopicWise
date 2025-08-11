@@ -47,8 +47,8 @@ public class WordLadder2 {
             String word = currList.get(currList.size() - 1);
 
             if (word.equals(endWord)) {
-                if (res.isEmpty()) res.add(list);
-                else if (res.get(0).size() == list.size()) res.add(list);
+                if (res.isEmpty()) res.add(currList);
+                else if (res.get(0).size() == currList.size()) res.add(currList);
             }
 
 
@@ -62,13 +62,13 @@ public class WordLadder2 {
 
                     if (wordSet.contains(temp)) {
 
-                        list.add(temp);
+                        currList.add(temp);
 
-                        queue.add(new ArrayList<>(list));
+                        queue.add(new ArrayList<>(currList));
 
                         usedOnLevel.add(temp);
 
-                        list.remove(list.size() - 1);
+                        currList.remove(currList.size() - 1);
 
                     }
                 }
