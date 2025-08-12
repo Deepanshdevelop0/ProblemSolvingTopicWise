@@ -17,7 +17,8 @@ public class CourseSchedule {
 
     public static void main(String[] args) {
 
-        int[][] prerequisites = new int[][]{{1, 0}, {1, 2}, {3, 1}, {2, 3}, {2, 4}, {4, 5}, {2, 5}};
+        int[][] prerequisites = new int[][]{{1, 0}, {1, 2}, {3, 1}, {2,3}, {2, 4}, {4, 5}, {2, 5}};
+
 
         System.out.println(canFinish(6, prerequisites));
 
@@ -25,46 +26,48 @@ public class CourseSchedule {
 
     public static boolean canFinish(int numCourses, int[][] prerequisites) {
 
+        // Build adjacency list: course b -> list of courses that depend on b
         ArrayList<ArrayList<Integer>> adjList = getAdjList(numCourses, prerequisites);
 
-        boolean[] visited = new boolean[numCourses + 1];
+        boolean[] visited = new boolean[numCourses + 1]; // Tracks visited nodes globally
+        Set<Integer> visitedSet = new HashSet<>();       // Tracks recursion stack for cycle detection
 
-        Set<Integer> visitedSet = new HashSet<>();
         boolean status = true;
 
+        // Check each course in case graph is disconnected
         for (int i = 0; i < adjList.size(); i++) {
             if (!visited[i] && status) {
                 status = dfs(i, status, visited, visitedSet, adjList);
             }
         }
 
+
         return status;
     }
 
-    public static boolean dfs(int curr, boolean status, boolean[] visited, Set<Integer> visitedSet, ArrayList<ArrayList<Integer>> adjList) {
+    public static boolean dfs(int curr, boolean status, boolean[] visited, Set<Integer> visitedSet,
+                              ArrayList<ArrayList<Integer>> adjList) {
 
-        if (!status) {
-            return status;
-        }
+        if (!status) return status; // Early exit if cycle already found
 
-        visited[curr] = true;
-        visitedSet.add(curr);
+        visited[curr] = true;   // Mark as visited
+        visitedSet.add(curr);    // Add to current recursion path
 
-        List<Integer> currList = adjList.get(curr);
+        List<Integer> currAdjList = adjList.get(curr);
 
-        for (int i : currList) {
+        // Explore neighbors (dependent courses)
+        for (int i : currAdjList) {
             if (!visited[i]) {
                 status = dfs(i, status, visited, visitedSet, adjList);
             } else if (visitedSet.contains(i)) {
-                return false;
+                return false;   // Cycle detected
             }
         }
 
-        visitedSet.remove(curr);
+        visitedSet.remove(curr);    // Backtrack
 
         return status;
     }
-
 
     public static ArrayList<ArrayList<Integer>> getAdjList(int numCourses, int[][] prerequisites) {
 
@@ -74,8 +77,10 @@ public class CourseSchedule {
             adjList.add(new ArrayList<>());
         }
 
-        for (int[] arr : prerequisites) {
-            adjList.get(arr[0]).add(arr[1]);
+        /* For each prerequisite [a, b], add edge b -> a
+           Remember course preq[1] comes before preq[0] means preq[1] --> preq[0] */
+        for (int[] preq : prerequisites) {
+            adjList.get(preq[1]).add(preq[0]);
         }
 
         return adjList;
