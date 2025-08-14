@@ -27,13 +27,9 @@ public class PreOrderTraversal {
         two.left = four;
         two.right = five;
 
-        /*four.left = null;
-        four.right = null;*/
-
         five.left = six;
         five.right = seven;
 
-//        three.left = null;
         three.right = eight;
 
         eight.left = nine;
