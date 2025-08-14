@@ -1,12 +1,9 @@
 package Trees.BinaryTrees.Traversal.DFS;
 
-import org.w3c.dom.Node;
-
-import javax.swing.tree.TreeNode;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PreOrderTraversal {
+public class PostOrderTraversal {
 
 /*
 
@@ -26,8 +23,6 @@ SC : O(N) : num of nodes in result list
         TreeNode five = new TreeNode(5);
         TreeNode six = new TreeNode(6);
         TreeNode seven = new TreeNode(7);
-        TreeNode eight = new TreeNode(8);
-        TreeNode nine = new TreeNode(9);
 
         one.left = two;
         one.right = three;
@@ -35,19 +30,18 @@ SC : O(N) : num of nodes in result list
         two.left = four;
         two.right = five;
 
-        five.left = six;
-        five.right = seven;
+//        five.left = six;
+//        five.right = seven;
 
-        three.right = eight;
-
-        eight.left = nine;
+        three.left = six;
+        three.right = seven;
 
 
         // Getting preorder traversal
-        List<Integer> result = preorderTraversal(one);
+        List<Integer> result = postorderTraversal(one);
 
         // Displaying the preorder traversal result
-        System.out.print("Preorder Traversal: ");
+        System.out.print("postOrder Traversal: ");
         // Output each value in the
         // preorder traversal result
         for (int val : result) {
@@ -56,7 +50,7 @@ SC : O(N) : num of nodes in result list
         System.out.println();
     }
 
-    public static List<Integer> preorderTraversal(TreeNode root) {
+    public static List<Integer> postorderTraversal(TreeNode root) {
 
         List<Integer> res = new ArrayList<>();
 
@@ -64,28 +58,29 @@ SC : O(N) : num of nodes in result list
             return res;
         }
 
-        preorderTraversalDfs(root, res);
+        postorderTraversalDfs(root, res);
 
         return res;
 
     }
 
-    public static void preorderTraversalDfs(TreeNode root, List<Integer> res) {
+    public static void postorderTraversalDfs(TreeNode root, List<Integer> res) {
 
-        res.add(root.val);
 
         if (root.left != null) {
-            preorderTraversalDfs(root.left, res);
+            postorderTraversalDfs(root.left, res);
         }
 
         if (root.right != null) {
-            preorderTraversalDfs(root.right, res);
+            postorderTraversalDfs(root.right, res);
         }
+
+        res.add(root.val);
 
     }
 
 
-    static public class TreeNode {
+    static class TreeNode {
         int val;
         TreeNode left;
         TreeNode right;

@@ -1,20 +1,17 @@
-package Trees.BinaryTrees.Traversal.DFS;
+package Trees.BinaryTrees.Traversal.BFS;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-public class InOrderTraversal {
-
+public class LevelOrderTraversal {
 
 /*
 
-DFS approach
+BFS approach
 
 TC : O(N) : num of nodes
 SC : O(N) : num of nodes in result list
 
 */
-
     public static void main(String[] args) {
         // Creating a sample binary tree
         TreeNode one = new TreeNode(1);
@@ -39,47 +36,64 @@ SC : O(N) : num of nodes in result list
 
 
         // Getting preorder traversal
-        List<Integer> result = inorderTraversal(one);
+        List<List<Integer>> result = levelOrder(one);
 
         // Displaying the preorder traversal result
-        System.out.print("Inorder Traversal: ");
+        System.out.println("levelOrder Traversal: ");
         // Output each value in the
         // preorder traversal result
-        for (int val : result) {
-            System.out.print(val + " ");
+        for (int i = 0; i < result.size(); i++) {
+            System.out.print(i + " : ");
+            result.get(i).forEach(j -> System.out.print(j + ", "));
+            System.out.println();
         }
         System.out.println();
     }
 
-    public static List<Integer> inorderTraversal(TreeNode root) {
+    public static List<List<Integer>> levelOrder(TreeNode root) {
 
-        List<Integer> res = new ArrayList<>();
+        List<List<Integer>> res = new ArrayList<>();
 
         if (root == null) {
             return res;
         }
 
-        inorderTraversalDfs(root, res);
+        Queue<TreeNode> queue = new ArrayDeque<>();
+
+        queue.add(root);
+
+        while (!queue.isEmpty()) {
+
+            int size = queue.size();
+
+            List<Integer> subRes = new ArrayList<>();
+
+            for (int i = 0; i < size; i++) {
+
+                TreeNode currNode = queue.poll();
+
+                subRes.add(currNode.val);
+
+                if (currNode.left != null) {
+                    queue.add(currNode.left);
+                }
+
+                if (currNode.right != null) {
+                    queue.add(currNode.right);
+                }
+
+            }
+
+            res.add(subRes);
+        }
+
 
         return res;
     }
 
-    public static void inorderTraversalDfs(TreeNode curr, List<Integer> res) {
-
-        if (curr.left != null) {
-            inorderTraversalDfs(curr.left, res);
-        }
-
-        res.add(curr.val);
-
-        if (curr.right != null) {
-            inorderTraversalDfs(curr.right, res);
-        }
-
-    }
 
 
-    public static class TreeNode {
+    private static class TreeNode {
         int val;
         TreeNode left;
         TreeNode right;
