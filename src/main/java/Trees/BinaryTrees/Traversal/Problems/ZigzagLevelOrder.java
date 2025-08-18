@@ -1,6 +1,7 @@
 package Trees.BinaryTrees.Traversal.Problems;
 
 import Trees.BinaryTrees.Traversal.BFS.LevelOrderTraversal;
+import org.w3c.dom.Node;
 
 import java.util.*;
 
@@ -43,7 +44,7 @@ SC : O(N + N + W) ~ O(N)
 
 
         // Getting preorder traversal
-        List<List<Integer>> result = zigzagLevelOrder(one);
+        List<List<Integer>> result = zigzagLevelOrderOptimal(one);
 
         // Displaying the preorder traversal result
         System.out.println("levelOrder Traversal: ");
@@ -57,8 +58,58 @@ SC : O(N + N + W) ~ O(N)
         System.out.println();
     }
 
-    public static List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+    /* adding into list (from front and last) as per boolean flag changed on each level */
+    public static List<List<Integer>> zigzagLevelOrderOptimal(TreeNode root) {
 
+        List<List<Integer>> res = new ArrayList<>();
+
+        if (root == null) {
+            return res;
+        }
+
+        Queue<TreeNode> queue = new ArrayDeque<>();
+        queue.add(root);
+
+        boolean leftToRight = true;
+
+        while (!queue.isEmpty()) {
+
+            int size = queue.size();
+
+            /* initialize list with 0 on indices */
+            List<Integer> subRes = new ArrayList<>(Collections.nCopies(size, 0));
+
+            for (int i = 0; i < size; i++) {
+
+                TreeNode curr = queue.peek();
+                queue.remove();
+
+                /* start from 0 to size-1 index on leftToRight true (even levels - 0,2,4) and from size-1 to 0 on leftToRight false (odd levels - 1,3,5) */
+                int index = leftToRight ? i : (size - i - 1);
+
+                /* add to subRes to futher in res list */
+                subRes.set(index, curr.val);
+
+                if (curr.left != null) {
+                    queue.add(curr.left);
+                }
+
+                if (curr.right != null) {
+                    queue.add(curr.right);
+                }
+
+            }
+
+            leftToRight = !leftToRight;
+            res.add(subRes);
+
+        }
+
+        return res;
+    }
+
+    /* Reversing on odd levels of tree */
+    public static List<List<Integer>> zigzagLevelOrder(TreeNode root) {
         List<List<Integer>> res = new ArrayList<>();
 
         if (root == null) {
@@ -96,14 +147,13 @@ SC : O(N + N + W) ~ O(N)
             if (level % 2 != 0) {
                 Collections.reverse(subRes);
             }
-            
+
             res.add(subRes);
-            level++; // increase level to track even or add level for reversing 
+            level++; // increase level to track even or add level for reversing
         }
 
         return res;
     }
-
 
 
 
