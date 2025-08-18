@@ -7,17 +7,34 @@ import java.util.*;
 
 public class ZigzagLevelOrder {
 
-
 /*
+
+i. zigzagLevelOrderOptimal :
 
 DFS
 
 TC : O(N) : no of nodes
 
 SC : O(N + N + W) ~ O(N)
-1. Size of queue
-2. result List of List size
+1. result List of List size
+2. Size of queuein worst case
 3. subResult list max width of level
+
+Extra work : None
+
+
+ii. zigzagLevelOrder :
+
+DFS
+
+TC : O(N) : no of nodes
+
+SC : O(N + N + W) ~ O(N)
+1. result List of List size
+2. Size of queue in worst case
+3. subResult list max width of level
+
+Extra work : Reversal per odd level
 
 */
     public static void main(String[] args) {
