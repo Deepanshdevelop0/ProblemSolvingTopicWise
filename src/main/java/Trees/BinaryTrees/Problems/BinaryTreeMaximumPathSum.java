@@ -1,4 +1,4 @@
-package Trees.BinaryTrees.Traversal.Problems;
+package Trees.BinaryTrees.Problems;
 
 public class BinaryTreeMaximumPathSum {
 
@@ -46,7 +46,7 @@ i. recursive stack space
         root2.right = new TreeNode(-2);
 
 
-        System.out.println(maxPathSum(root2));
+        System.out.println(maxPathSum(root1));
 
     }
 

@@ -1,4 +1,4 @@
-package Trees.BinaryTrees.Traversal.Problems;
+package Trees.BinaryTrees.Problems;
 
 import Trees.BinaryTrees.Traversal.BFS.LevelOrderTraversal;
 import org.w3c.dom.Node;

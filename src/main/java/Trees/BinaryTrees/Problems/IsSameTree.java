@@ -1,4 +1,4 @@
-package Trees.BinaryTrees.Traversal.Problems;
+package Trees.BinaryTrees.Problems;
 
 public class IsSameTree {
 

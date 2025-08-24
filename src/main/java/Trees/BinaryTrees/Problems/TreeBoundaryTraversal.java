@@ -1,4 +1,4 @@
-package Trees.BinaryTrees.Traversal.Problems;
+package Trees.BinaryTrees.Problems;
 
 import java.util.ArrayList;
 
