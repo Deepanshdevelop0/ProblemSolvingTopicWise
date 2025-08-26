@@ -1,4 +1,6 @@
-package Trees.BinaryTrees.Traversal.Problems;
+package Trees.BinaryTrees.Problems;
+
+import Trees.BinaryTrees.Utility.TreeNode;
 
 import java.util.ArrayList;
 
@@ -53,7 +55,7 @@ ii. No of nodes in recursive stack O(H), in worst case O(N) for skewed tree
             return;
         }
 
-        path.add(root.data);
+        path.add(root.val);
 
         getPathsDfs(root.left, path, res);
         getPathsDfs(root.right, path, res);
@@ -67,24 +69,4 @@ ii. No of nodes in recursive stack O(H), in worst case O(N) for skewed tree
     }
 
 
-
-
-    private static class TreeNode {
-        int data;
-        TreeNode left;
-        TreeNode right;
-
-        TreeNode() {
-        }
-
-        TreeNode(int data) {
-            this.data = data;
-        }
-
-        TreeNode(int data, TreeNode left, TreeNode right) {
-            this.data = data;
-            this.left = left;
-            this.right = right;
-        }
-    }
 }

@@ -1,4 +1,6 @@
-package Trees.BinaryTrees.Traversal.Problems;
+package Trees.BinaryTrees.Problems;
+
+import Trees.BinaryTrees.Utility.TreeNode;
 
 import java.util.ArrayList;
 
@@ -62,25 +64,4 @@ SC : O(H) : No of nodes in recursive stack, (height of tree, worst case O(N))
         return false;
     }
 
-
-
-
-    private static class TreeNode {
-        int val;
-        TreeNode left;
-        TreeNode right;
-
-        TreeNode() {
-        }
-
-        TreeNode(int val) {
-            this.val = val;
-        }
-
-        TreeNode(int val, TreeNode left, TreeNode right) {
-            this.val = val;
-            this.left = left;
-            this.right = right;
-        }
-    }
 }

@@ -1,4 +1,6 @@
-package Trees.BinaryTrees.Traversal.Problems;
+package Trees.BinaryTrees.Problems;
+
+import Trees.BinaryTrees.Utility.TreeNode;
 
 public class lowestCommonAncestor {
 
@@ -61,25 +63,5 @@ SC : O(N) : recursive stack space for (balanced trees O(H)), (worst case, for sk
         
     }
 
-
-
-    private static class TreeNode {
-        int val;
-        TreeNode left;
-        TreeNode right;
-
-        TreeNode() {
-        }
-
-        TreeNode(int val) {
-            this.val = val;
-        }
-
-        TreeNode(int val, TreeNode left, TreeNode right) {
-            this.val = val;
-            this.left = left;
-            this.right = right;
-        }
-    }
 
 }
