@@ -87,9 +87,9 @@ for a complete binary tree last level can have upto N/2 nodes, worst case O(N)
                 if (i == 0) first = currIndx;
                 if (i == size - 1) last = currIndx;
 
-                /* the childNode index = currIndx * 2 (left), currIndx * 2 + 1 (right),
-                   level 2 : 2nd node's (indx = 1) left and right child :
-                   (left : 1 * 2 = 2) and (right 1 * 2 + 1 = 3) on level 3 */
+
+                /* For node at index i, left child = 2*i, right child = 2*i+1.
+                 Example: At level 2, node index 1 → left = 2, right = 3 (on level 3). */
 
                 if (currNode.left != null) {
                     queue.add(new Pair(currNode.left, currIndx * 2));
