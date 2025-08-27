@@ -89,7 +89,6 @@ public class NodesAtDistanceK {
                 adjMap.computeIfAbsent(currNode.val, k -> new ArrayList<>()).add(currNode.right.val);
                 adjMap.computeIfAbsent(currNode.right.val, k -> new ArrayList<>()).add(currNode.val);
             }
-
         }
 
         return adjMap;
