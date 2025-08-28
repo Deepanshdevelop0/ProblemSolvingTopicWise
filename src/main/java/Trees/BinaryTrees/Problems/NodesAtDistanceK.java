@@ -1,6 +1,7 @@
 package Trees.BinaryTrees.Problems;
 
 import Trees.BinaryTrees.Utility.TreeNode;
+import Trees.BinaryTrees.Utility.TreeUtils;
 
 import javax.imageio.stream.IIOByteBuffer;
 import java.util.*;
@@ -23,7 +24,7 @@ public class NodesAtDistanceK {
 
         TreeNode root1 = new TreeNode(1);
 
-        distanceK(root1, root1, 3).forEach(i -> {
+        distanceK(root, root.left, 2).forEach(i -> {
             System.out.print(i + ", ");
         });
 
