@@ -24,11 +24,104 @@ public class NodesAtDistanceK {
 
         TreeNode root1 = new TreeNode(1);
 
-        distanceK(root, root.left, 2).forEach(i -> {
+        TreeNode rooot = TreeUtils.buildTree(new Integer[]{0,1,null,null,2,null,3,null,4});
+
+        distanceKMostOptimal(rooot, rooot.left, 0).forEach(i -> {
             System.out.print(i + ", ");
         });
 
     }
+
+    /* Approach 1 (More Optimal) : Using level order traversal from the target node */
+
+    public static List<Integer> distanceKMostOptimal(TreeNode root, TreeNode target, int k) {
+        List<Integer> res = new ArrayList<>();
+
+        if (root == null) {
+            return res;
+        }
+
+        Map<TreeNode, TreeNode> parentMap = new HashMap<>();
+
+        prepareParentMap(root, parentMap);
+
+        Set<TreeNode> visitedSet = new HashSet<>();
+
+        Queue<TreeNode> queue = new ArrayDeque<>();
+        queue.add(target);
+        visitedSet.add(target);
+
+        int level = 0;
+
+        while (!queue.isEmpty()) {
+
+            int size = queue.size();
+
+            /* Compare here as value of k can be zero, that means target node itself */
+            if (level == k) {
+                break;
+            }
+
+            for (int i = 0; i < size; i++) {
+
+                TreeNode curr = queue.poll();
+
+                if (curr.left != null && !visitedSet.contains(curr.left)) {
+                    queue.add(curr.left);
+                    visitedSet.add(curr.left);
+                }
+
+                if (curr.right != null && !visitedSet.contains(curr.right)) {
+                    queue.add(curr.right);
+                    visitedSet.add(curr.right);
+                }
+
+                /* Path can be crossed using parent node of target nd connected nodes */
+                if (parentMap.containsKey(curr) && !visitedSet.contains(parentMap.get(curr))) {
+                    queue.add(parentMap.get(curr));
+                    visitedSet.add(parentMap.get(curr));
+                }
+
+            }
+
+            level++;
+
+        }
+
+        /* left over nodes in queue are of k distance from target, where k == level as per code */
+        while (!queue.isEmpty()) {
+            res.add(queue.poll().val);
+        }
+
+
+        return res;
+    }
+
+
+    public static void prepareParentMap(TreeNode root, Map<TreeNode, TreeNode> parentMap) {
+
+        Queue<TreeNode> queue = new ArrayDeque<>();
+
+        queue.add(root);
+
+        while (!queue.isEmpty()) {
+
+            TreeNode curr = queue.poll();
+
+            if (curr.left != null) {
+                parentMap.put(curr.left, curr);
+                queue.add(curr.left);
+            }
+
+            if (curr.right != null) {
+                parentMap.put(curr.right, curr);
+                queue.add(curr.right);
+            }
+        }
+
+    }
+
+    /* Approach 2 (Less Optimal) : Conversion of tree to graph and dfs on target's neighbors */
 
     public static List<Integer> distanceK(TreeNode root, TreeNode target, int k) {
 
