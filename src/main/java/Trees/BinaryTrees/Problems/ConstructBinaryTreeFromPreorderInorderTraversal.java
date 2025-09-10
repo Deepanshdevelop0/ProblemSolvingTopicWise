@@ -15,7 +15,7 @@ DFS
 TC : O(N) - N is the number of nodes
 
 SC : O(N + N)
-N is the number of nodes + aux stack space (recursive) O(N) in worst case skewed trees
+i. N is the number of nodes + aux stack space (recursive), O(N) in worst case skewed trees
 
 */
 
