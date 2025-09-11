@@ -32,6 +32,32 @@ public class TreeUtils {
         return root;
     }
 
+    public static Node buildTreeFromNode(Integer[] arr) {
+        if (arr == null || arr.length == 0) return null;
+
+        Node root = new Node(arr[0]);
+        Queue<Node> queue = new LinkedList<>();
+        queue.offer(root);
+
+        int i = 1;
+        while (!queue.isEmpty() && i < arr.length) {
+            Node node = queue.poll();
+
+            if (i < arr.length && arr[i] != null) {
+                node.left = new Node(arr[i]);
+                queue.offer(node.left);
+            }
+            i++;
+
+            if (i < arr.length && arr[i] != null) {
+                node.right = new Node(arr[i]);
+                queue.offer(node.right);
+            }
+            i++;
+        }
+        return root;
+    }
+
     // Pretty print tree (rotated)
     public static void printTree(TreeNode root) {
         if (root == null) return;
@@ -107,6 +133,81 @@ public class TreeUtils {
 
     private static boolean isAllElementsNull(List<TreeNode> list) {
         for (TreeNode node : list) {
+            if (node != null)
+                return false;
+        }
+        return true;
+    }
+
+    public static void printTree(Node root) {
+        if (root == null) return;
+        int maxLevel = maxDepth(root);
+        printNodeInternalForNode(Collections.singletonList(root), 1, maxLevel);
+    }
+
+    private static void printNodeInternalForNode(List<Node> nodes, int level, int maxLevel) {
+        if (nodes.isEmpty() || isAllElementsNullForNode(nodes))
+            return;
+
+        int floor = maxLevel - level;
+        int edgeLines = (int) Math.pow(1, (Math.max(floor - 1, 0)));
+        int firstSpaces = (int) Math.pow(2, (floor)) - 1;
+        int betweenSpaces = (int) Math.pow(2, (floor + 1)) - 1;
+
+        printWhitespaces(firstSpaces);
+
+        List<Node> newNodes = new ArrayList<>();
+        for (Node node : nodes) {
+            if (node != null) {
+                System.out.print(node.data);
+                newNodes.add(node.left);
+                newNodes.add(node.right);
+            } else {
+                System.out.print(" ");
+                newNodes.add(null);
+                newNodes.add(null);
+            }
+
+            printWhitespaces(betweenSpaces);
+        }
+        System.out.println();
+
+        for (int i = 1; i <= edgeLines; i++) {
+            for (int j = 0; j < nodes.size(); j++) {
+                printWhitespaces(firstSpaces - i);
+                if (nodes.get(j) == null) {
+                    printWhitespaces(edgeLines + edgeLines + i + 1);
+                    continue;
+                }
+
+                if (nodes.get(j).left != null)
+                    System.out.print("/");
+                else
+                    printWhitespaces(1);
+
+                printWhitespaces(i + i - 1);
+
+                if (nodes.get(j).right != null)
+                    System.out.print("\\");
+                else
+                    printWhitespaces(1);
+
+                printWhitespaces(edgeLines + edgeLines - i);
+            }
+
+            System.out.println();
+        }
+
+        printNodeInternalForNode(newNodes, level + 1, maxLevel);
+    }
+
+    private static int maxDepth(Node root) {
+        if (root == null) return 0;
+        return Math.max(maxDepth(root.left), maxDepth(root.right)) + 1;
+    }
+
+    private static boolean isAllElementsNullForNode(List<Node> list) {
+        for (Node node : list) {
             if (node != null)
                 return false;
         }
