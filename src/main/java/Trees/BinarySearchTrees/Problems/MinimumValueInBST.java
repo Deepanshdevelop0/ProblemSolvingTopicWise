@@ -5,6 +5,18 @@ import Trees.BinaryTrees.Utility.TreeUtils;
 
 public class MinimumValueInBST {
 
+/*
+
+Iterative Approach
+
+Time Complexity: O(h), where h = height of the tree
+Balanced BST: O(log n)
+Skewed BST: O(n)
+
+Space Complexity: O(1) (iterative, no recursion)
+
+*/
+
     public static void main(String[] args) {
         TreeNode root = new TreeNode(5);
         root.left = new TreeNode(4);
@@ -15,29 +27,19 @@ public class MinimumValueInBST {
 
         TreeUtils.printTree(root);
 
-        System.out.println(minValue(root));
+        System.out.println(minValueMostOptimal(root));
     }
 
-    public static int minValue(TreeNode root) {
+    public static int minValueMostOptimal(TreeNode root) {
+        if (root == null) {
+            return -1;
+        }
 
-        return findMinValue(root, Integer.MAX_VALUE);
+        while (root.left != null) {
+            root = root.left;
+        }
+
+        return root.val;
     }
-
-    public static int findMinValue(TreeNode root, int min) {
-
-        if (root.left == null && root.right == null) {
-            return root.val;
-        }
-
-        if (root.left != null) {
-            min = Math.min(root.val, findMinValue(root.left, min));
-        }
-        if (root.right != null) {
-            min = Math.min(root.val, findMinValue(root.right, min));
-        }
-
-        return min;
-    }
-
 
 }
