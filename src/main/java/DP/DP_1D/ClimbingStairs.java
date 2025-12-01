@@ -2,6 +2,22 @@ package DP.DP_1D;
 
 public class ClimbingStairs {
 
+
+/*
+
+method : Iterative DP (Space Optimized)
+TC : O(N) : We iterate linearly from 3 up to N.
+SC : O(1) : Uses a constant number of variables (one, two, current) regardless of N.
+
+====================================================================
+
+method : Pure Recursion (Brute Force)
+
+TC : O(2^N) : The problem is solved by exploring a binary recursion tree of depth N, leading to exponential time complexity.
+SC : O(N) : O(N) for the maximum depth of the recursion stack.
+
+*/
+
     public static void main(String[] args) {
 
         System.out.println(climbStairsOptimal(0));
