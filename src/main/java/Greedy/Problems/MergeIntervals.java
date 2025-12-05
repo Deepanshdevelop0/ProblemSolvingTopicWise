@@ -7,6 +7,15 @@ import java.util.List;
 
 public class MergeIntervals {
 
+/*
+
+TC : O(NlogN), where n is no of intervals
+Dominated by the initial sorting of the intervals.
+
+SC : O(N)
+Required to store the sorted copy of the input and the resultant merged list.
+
+*/
     public static void main(String[] args) {
 
         int[][] intervals = new int[][]{{1,3},{2,6},{8,10},{15,18}};
@@ -23,25 +32,37 @@ public class MergeIntervals {
 
     public int[][] merge(int[][] intervals) {
 
-        if (intervals.length <= 1) return intervals;
+        int n = intervals.length;
 
-        Arrays.sort(intervals, Comparator.comparingInt(i -> i[1]));
+        if (n <= 1) return intervals;
+
+        Arrays.sort(intervals, Comparator.comparingInt(i -> i[0]));
 
         List<int[]> res = new ArrayList<>();
 
-        if (intervals[1][0] <= intervals[0][1] && intervals[1][1] >= intervals[0][0]) {
-            res.add(new int[]{Math.min(intervals[0][0], intervals[1][0]), Math.max(intervals[0][1], intervals[1][1])});
+        // Add the first interval to the result list
+        res.add(intervals[0]);
+
+        int a1 = 0, a2 = 0;
+        int b1 = 0, b2 = 0;
+
+        for (int i = 1; i < n; i++) {
+
+            a1 = res.get(res.size() - 1)[0]; a2 = res.get(res.size() - 1)[1];
+            b1 = intervals[i][0]; b2 = intervals[i][1];
+
+            // take last index of res to compare the overlap
+            // if it overlaps modify the res last index arr else add new interval [] in res list
+            if (b1 <= a2 && b2 >= a1) {
+                // index 0 would already be minimum as we sorted array and that index already added to res appeared first to this index in intervals
+                res.get(res.size() - 1)[1] = Math.max(a2, b2);
+            }
+            else {
+                res.add(intervals[i]);
+            }
         }
-        else {
-            res.add(new int[]{intervals[0][0], intervals[0][1]});
-        }
 
-        // check with new i=1 or 0 if not merged above,
-        // and take last index of res to compare the overlap
-        // if overlaps modify the res last index arr else add new interval [] in res list
-
-
-        return res.toArray(new int[intervals.length][]);
+        return res.toArray(new int[res.size()][]);
     }
 
 
