@@ -50,7 +50,6 @@ public class InsertInterval {
             } else { // no overlapping in newinterval or res's n-1 indx interval, so just add this interval
                 res.add(currInterval);
             }
-
         }
 
         if (!merged) {
