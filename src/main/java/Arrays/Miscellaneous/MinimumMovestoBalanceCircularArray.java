@@ -40,7 +40,6 @@ public class MinimumMovestoBalanceCircularArray {
                 neg += min;
             }
 
-
             if (negIndx + i < n) {
                 int min = Math.min(Math.abs(neg), balance[negIndx + i]);
                 moves += (min * i);
