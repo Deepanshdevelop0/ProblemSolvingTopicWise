@@ -13,22 +13,25 @@ public class LIS {
     public int lengthOfLIS(int[] nums) {
         int n = nums.length;
 
-        int max = 0;
+        return lengthOfLisRecursive(nums, n, 0, -1);
+    }
 
-        for (int i = 0; i < n; i++) {
-            int tempMax = 1, temp = nums[i];
 
-            for (int j = i + 1; j < n; j++) {
-                if (nums[j] > temp) {
-                    tempMax++;
-                    temp = nums[j];
-                }
-            }
+    public int lengthOfLisRecursive(int[] nums, int n, int indx, int prevIndx) {
 
-            max = Math.max(max, tempMax);
+        if (indx == n) {
+            return 0;
         }
 
-        return max;
+        int take = 0;
+
+        if (prevIndx == -1 || nums[prevIndx] < nums[indx]) {
+            take = 1 + lengthOfLisRecursive(nums, n, indx+1, indx);
+        }
+
+        int notTake = lengthOfLisRecursive(nums, n, indx+1, prevIndx);
+
+        return Math.max(take, notTake);
     }
 
 }
