@@ -34,11 +34,32 @@ ii. Recursive stack space
 
 ====================================================================
 
-method : Tabulation (Bottom-Up DP)
+3. method : Tabulation (Bottom-Up DP)
 
 TC : O(N^2)
+
+i. Two nested loops: the outer loop runs from n-1 to 0, and the inner loop runs from indx-1 to -1.
+ii. Each cell in the 2D DP table is filled exactly once using O(1) operations.
+
+SC : O(N^2)
+
+i. We use a 2D array `dp[n+1][n+1]` to store results of all subproblems.
+ii. No recursive stack space is used, unlike Memoization.
+
+====================================================================
+
+4. method : Space Optimized Tabulation (Bottom-Up DP)
+
+TC : O(N^2)
+
+i. Same nested loop structure as standard Tabulation.
+
 SC : O(N)
-*
+
+i. Instead of an entire 2D matrix, we only maintain two rows: `nextDp` (representing the results of the next index)
+   and `currDp` (the current index being calculated).
+ii. Pointer swapping is used to transition between states, reducing space from O(N^2) to 2 * O(N).
+
 */
 
     public static void main(String[] args) {
@@ -46,23 +67,23 @@ SC : O(N)
         int[] nums = new int[]{10, 9, 2, 5, 3, 7, 101, 18};
         LIS classObj = new LIS();
 
-        System.out.println(classObj.lengthOfLIS(nums));
+        System.out.println(classObj.lengthOfLIS_TabulationSpaceOptimized(nums, nums.length));
     }
 
     public int lengthOfLIS(int[] nums) {
         int n = nums.length;
 
-        int[][] dp = new int[n][n+1];
+        int[][] dp = new int[n][n + 1];
 
         for (int[] arr : dp) {
             Arrays.fill(arr, -1);
         }
 
-        return lengthOfLisMemoized(nums, n, 0, -1, dp);
+        return lengthOfLISMemoized(nums, n, 0, -1, dp);
     }
 
 
-    public int lengthOfLisRecursive(int[] nums, int n, int indx, int prevIndx) {
+    public int lengthOfLISRecursive(int[] nums, int n, int indx, int prevIndx) {
 
         if (indx == n) {
             return 0;
@@ -71,33 +92,79 @@ SC : O(N)
         int take = 0;
 
         if (prevIndx == -1 || nums[prevIndx] < nums[indx]) {
-            take = 1 + lengthOfLisRecursive(nums, n, indx+1, indx);
+            take = 1 + lengthOfLISRecursive(nums, n, indx + 1, indx);
         }
 
-        int notTake = lengthOfLisRecursive(nums, n, indx+1, prevIndx);
+        int notTake = lengthOfLISRecursive(nums, n, indx + 1, prevIndx);
 
         return Math.max(take, notTake);
     }
 
-    public int lengthOfLisMemoized(int[] nums, int n, int indx, int prevIndx, int[][] dp) {
+    public int lengthOfLISMemoized(int[] nums, int n, int indx, int prevIndx, int[][] dp) {
 
         if (indx == n) {
             return 0;
         }
 
-        if (dp[indx][prevIndx+1] != -1)
-            return dp[indx][prevIndx+1];
+        if (dp[indx][prevIndx + 1] != -1)
+            return dp[indx][prevIndx + 1];
 
         int take = 0;
 
         if (prevIndx == -1 || nums[prevIndx] < nums[indx]) {
-            take = 1 + lengthOfLisMemoized(nums, n, indx+1, indx, dp);
+            take = 1 + lengthOfLISMemoized(nums, n, indx + 1, indx, dp);
         }
 
-        int notTake = lengthOfLisMemoized(nums, n, indx+1, prevIndx, dp);
+        int notTake = lengthOfLISMemoized(nums, n, indx + 1, prevIndx, dp);
 
         return dp[indx][prevIndx + 1] = Math.max(take, notTake);
     }
 
+    public int lengthOfLIS_Tabulation(int[] nums, int n) {
+
+        int[][] dp = new int[n + 1][n + 1];
+
+        for (int indx = n - 1; indx >= 0; indx--) {
+            for (int prevIndx = indx - 1; prevIndx >= -1; prevIndx--) {
+                int len = 0 + dp[indx + 1][prevIndx + 1];
+                if (prevIndx == -1 || nums[indx] > nums[prevIndx]) {
+                    len = Math.max(len, 1 + dp[indx + 1][indx + 1]);
+                }
+                dp[indx][prevIndx + 1] = len;
+
+            }
+        }
+
+        return dp[0][0];
+    }
+
+    public int lengthOfLIS_TabulationSpaceOptimized(int[] nums, int n) {
+
+        int[] currDp = new int[n + 1];
+        int[] nextDp = new int[n + 1];
+
+        for (int indx = n - 1; indx >= 0; indx--) {
+            for (int prevIndx = indx - 1; prevIndx >= -1; prevIndx--) {
+
+                // OPTION 1: Not Take
+                int len = 0 + nextDp[prevIndx + 1];
+
+                // OPTION 2: Take
+                if (prevIndx == -1 || nums[indx] > nums[prevIndx]) {
+                    len = Math.max(len, 1 + nextDp[indx + 1]);
+                }
+
+                currDp[prevIndx + 1] = len;
+            }
+
+            // SWAP REFERENCES: O(1) complexity
+            // No copying, no new memory allocation
+            int[] temp = nextDp;
+            nextDp = currDp;
+            currDp = temp;
+        }
+
+        return nextDp[0];
+    }
 
 }
