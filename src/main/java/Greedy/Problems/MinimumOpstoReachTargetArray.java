@@ -21,7 +21,6 @@ public class MinimumOpstoReachTargetArray {
         // Output: 2
     }
 
-
     public int minOperations(int[] nums, int[] target) {
         Set<Integer> set = new HashSet<>();
 
