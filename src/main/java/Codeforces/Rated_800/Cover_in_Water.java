@@ -4,6 +4,10 @@ import java.util.Scanner;
 
 public class Cover_in_Water {
 
+
+// Time Complexity (TC): O(n) = O(100)
+// Space Complexity (SC): O(n) = O(100)
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
@@ -35,13 +39,12 @@ public class Cover_in_Water {
 
         for (int i = 0; i < n; i++) {
             boolean curr = charr[i] == '.'; // is empty for water
-            boolean one = (i < n-1 && charr[i+1] == '.');
-            boolean two = (i < n-2 && charr[i+2] == '.');
+            boolean one = (i < n - 1 && charr[i + 1] == '.');
+            boolean two = (i < n - 2 && charr[i + 2] == '.');
             if (curr && one && two) {
                 hasThreeConsecutive = true;
                 break;
-            }
-            else if (curr) {
+            } else if (curr) {
                 count++;
             }
         }
