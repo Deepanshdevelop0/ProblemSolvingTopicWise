@@ -10,7 +10,6 @@ public class Design_Event_Manager_contest {
 
     }
 
-
 }
 
 
