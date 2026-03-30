@@ -7,7 +7,20 @@ import java.util.PriorityQueue;
 public class Design_Event_Manager_contest {
 
     public static void main(String[] args) {
+        // Test Case 1
+        int[][] events1 = {{5, 7}, {2, 7}, {9, 4}};
+        EventManager em1 = new EventManager(events1);
+        System.out.println(em1.pollHighest());        // returns 2
+        em1.updatePriority(9, 7);
+        System.out.println(em1.pollHighest());        // returns 5
+        System.out.println(em1.pollHighest());        // returns 9
 
+        // Test Case 2
+        int[][] events2 = {{4, 1}, {7, 2}};
+        EventManager em2 = new EventManager(events2);
+        System.out.println(em2.pollHighest());        // returns 7
+        System.out.println(em2.pollHighest());        // returns 4
+        System.out.println(em2.pollHighest());        // returns -1
     }
 
 }
@@ -26,13 +39,10 @@ class EventManager {
             return Integer.compare(a[0], b[0]);
         });
 
-        // int[] arr = events;
-
         for (int[] event : events) {
             map.put(event[0], event[1]);
             pq.offer(new int[]{event[0], event[1]});
         }
-
 
     }
 
