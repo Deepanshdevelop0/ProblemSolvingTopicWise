@@ -44,7 +44,6 @@ public class Odd_Even_Linked_List {
         even.next = null; // to break any link of linkedlist end
 
         return oddHead;
-
     }
 
 
