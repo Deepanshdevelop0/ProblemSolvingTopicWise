@@ -71,10 +71,10 @@ public class Delete_the_Middle_Node_of_a_Linked_List {
         while (fast != null && fast.next != null) {
             list.add(slow);
             slow = slow.next;
-            fast = fast.next;
+            fast = fast.next.next;
         }
 
-        ListNode prevNode = list.get(list.size() - 2);
+        ListNode prevNode = list.get(list.size() - 1);
         prevNode.next = slow.next;
 
         return head;
