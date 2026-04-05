@@ -4,6 +4,33 @@ import java.util.*;
 
 public class Integers_With_Multiple_Sum_of_Two_Cubes_contest {
 
+/*
+
+* findGoodIntegers method: (using HashMap)
+
+TC: O(n^(2/3) + K log K) where n is the input integer and K is the number of good
+    integers found. Generating the sums takes approximately (cube root of n)^2
+    iterations, and sorting the final list takes K log K.
+
+SC: O(n^(2/3)) as we store all unique sums of two cubes (a^3 + b^3 <= n) in a
+    HashMap to count their frequencies.
+-----------------------------------------
+
+* findGoodIntegersOptimal method: (using Two Pointers & Pre-computed Cubes)
+
+TC: O(n^(2/3)) to generate all sums. If we use a sorted list of cubes and a two-pointer
+    approach (similar to 3Sum) to find pairs, we can identify "good" integers
+    without a large frequency map.
+
+SC: O(n^(1/3)) if we only store the list of cubes up to the cube root of n,
+    though we still need space to store and sort the identified good integers.
+-----------------------------------------
+
+Note: The HashMap approach is the most straightforward for identifying integers
+      with multiple representations. Because the cube root of 10^9 is only 1000,
+      the n^(2/3) complexity (500,000 operations) is highly efficient and fits
+      comfortably within standard time and memory limits.
+*/
     public static void main(String[] args) {
         Integers_With_Multiple_Sum_of_Two_Cubes_contest classObj = new Integers_With_Multiple_Sum_of_Two_Cubes_contest();
         System.out.println("Case 1");
