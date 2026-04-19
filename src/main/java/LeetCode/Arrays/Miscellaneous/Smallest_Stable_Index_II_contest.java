@@ -7,6 +7,7 @@ public class Smallest_Stable_Index_II_contest {
         System.out.println(classObj.firstStableIndex(new int[]{5,0,1,4}, 3));
     }
 
+
     public int firstStableIndex(int[] nums, int k) {
         int n = nums.length;
         int[] maxArr = new int[n];
