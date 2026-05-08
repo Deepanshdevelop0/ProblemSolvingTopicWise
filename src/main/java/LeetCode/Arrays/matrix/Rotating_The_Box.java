@@ -10,7 +10,7 @@ public class Rotating_The_Box {
                 {'#', '#', '#', '.', '#', '.', '*'},
         };
 
-        classObj.rotateTheBox(boxGrid);
+//        classObj.rotateTheBox(boxGrid);
         for (char[] row : classObj.rotateTheBox(boxGrid)) {
             System.out.println(row);
         }
