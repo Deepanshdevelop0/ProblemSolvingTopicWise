@@ -18,6 +18,7 @@ public class Rotating_The_Box {
     }
 
     public char[][] rotateTheBox(char[][] boxGrid) {
+
         int m = boxGrid.length, n = boxGrid[0].length;
 
         for (char[] arr : boxGrid) {
@@ -60,7 +61,7 @@ public class Rotating_The_Box {
 
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
-                rotated[i][j] = boxGrid[j][i];
+                rotated[i][j] = boxGrid[m - j - 1][i];
             }
         }
 
