@@ -4,7 +4,7 @@ public class Binary_Subarrays_With_Sum {
 
     public static void main(String[] args) {
         Binary_Subarrays_With_Sum classObj = new Binary_Subarrays_With_Sum();
-        System.out.println(classObj.numSubarraysWithSum(new int[]{1,0,1,0,1}, 2));
+        System.out.println(classObj.numSubarraysWithSum(new int[]{1, 0, 1, 0, 1}, 2));
     }
 
     public int numSubarraysWithSum(int[] nums, int goal) {
@@ -13,6 +13,11 @@ public class Binary_Subarrays_With_Sum {
 
         for (int i = 0; i < n; i++) {
 
+            int sum = 0;
+
+            for (int j = i; j < n; j++) {
+                sum += nums[j];
+            }
         }
 
         return count;
