@@ -6,13 +6,16 @@ import java.util.List;
 public class MergeSort {
 
     public static void main(String[] args) {
-        MergeSort classObj = new MergeSort();
-        int[] arr = new int[]{5,3,2,9,3,4};
-        classObj.mergeSort(arr, 0, arr.length - 1);
 
-        for (int i : arr) {
-            System.out.print(i + ", ");
-        }
+        System.out.println((int) Math.cbrt(28));
+
+//        MergeSort classObj = new MergeSort();
+//        int[] arr = new int[]{5,3,2,9,3,4};
+//        classObj.mergeSort(arr, 0, arr.length - 1);
+//
+//        for (int i : arr) {
+//            System.out.print(i + ", ");
+//        }
     }
 
     public void mergeSort(int arr[], int l, int r) {
