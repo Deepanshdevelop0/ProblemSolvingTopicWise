@@ -16,14 +16,16 @@ public class QuickSort {
 
     }
 
+
     void quickSort(int[] arr, int low, int high) {
 
         if (low < high) {
+
             // Find pivot index
             int pivot = partition(arr, low, high);
 
             // sort left subarray
-            quickSort(arr, low, pivot - 1);
+            quickSort(arr, low, pivot-1);
 
             // sort right subarray
             quickSort(arr, pivot + 1, high);
@@ -32,13 +34,11 @@ public class QuickSort {
     }
 
     int partition(int[] arr, int low, int high) {
-
-        // Choose last element as pivot
         int pivot = arr[high];
         int j = low;
 
+        // Choose last element as pivot
         for (int i = low; i < high; i++) {
-            // If element <= pivot
             if (arr[i] <= pivot) {
                 int temp = arr[j];
                 arr[j] = arr[i];

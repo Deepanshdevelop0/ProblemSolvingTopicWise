@@ -9,58 +9,59 @@ public class MergeSort {
 
         System.out.println((int) Math.cbrt(28));
 
-//        MergeSort classObj = new MergeSort();
-//        int[] arr = new int[]{5,3,2,9,3,4};
-//        classObj.mergeSort(arr, 0, arr.length - 1);
-//
-//        for (int i : arr) {
-//            System.out.print(i + ", ");
-//        }
+        MergeSort classObj = new MergeSort();
+        int[] arr = new int[]{5,3,2,9,3,4};
+        int[] helper = new int[arr.length];
+
+        classObj.mergeSort(arr, 0, arr.length - 1, helper);
+
+        for (int i : arr) {
+            System.out.print(i + ", ");
+        }
     }
 
-    public void mergeSort(int arr[], int l, int r) {
+    public void mergeSort(int arr[], int l, int r, int[] helper) {
 
         if (l >= r) return;
 
         int mid = l + (r - l) / 2;
 
-        mergeSort(arr, l, mid);
+        mergeSort(arr, l, mid, helper);
 
-        mergeSort(arr, mid+1, r);
+        mergeSort(arr, mid+1, r, helper);
 
-//        mergeIntial(arr, l, mid, r);
-        mergeImproved(arr, l, mid, r); // improved for boxing/unboxing from List type, instead used int[]
+//        merge(arr, l, mid, r);
+        mergeSpaceOptimized(arr, l, mid, r, helper); // improved for boxing/unboxing from List type, instead used int[]
 
     }
 
 
-    void mergeImproved(int[] arr, int l, int mid, int r) {
+    void mergeSpaceOptimized(int[] arr, int l, int mid, int r, int[] helper) {
 
-        int[] res = new int[r - l + 1];
         int low = l, high = mid+1;
-        int k = 0;
+        int k = l;
 
         while (low <= mid && high <= r) {
 
             if (arr[low] <= arr[high]) {
-                res[k++] = arr[low++];
+                helper[k++] = arr[low++];
             }
             else {
-                res[k++] = arr[high++];
+                helper[k++] = arr[high++];
             }
 
         }
 
         while (low <= mid) {
-            res[k++] = arr[low++];
+            helper[k++] = arr[low++];
         }
 
         while (high <= r) {
-            res[k++] = arr[high++];
+            helper[k++] = arr[high++];
         }
 
-        for (int i : res) {
-            arr[l++] = i;
+        while (l <= r) {
+            arr[l] = helper[l++];
         }
 
     }

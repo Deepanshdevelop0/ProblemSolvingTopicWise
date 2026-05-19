@@ -7,7 +7,8 @@ public class Rearrange_Array_Elements_by_Sign {
 
     public static void main(String[] args) {
         Rearrange_Array_Elements_by_Sign classObj = new Rearrange_Array_Elements_by_Sign();
-        for (var i : classObj.rearrangeArrayChangedProblemRequirement(new int[]{3, 1, 2, 2, -5, -4})) {
+//        for (var i : classObj.rearrangeArrayMostOptimized(new int[]{3, 1, 2, 2, -5, -4})) {
+        for (var i : classObj.rearrangeArrayMostOptimized(new int[]{3, 1, -2, -5, 2, -4})) {
             System.out.println(i);
         }
     }
@@ -59,6 +60,54 @@ public class Rearrange_Array_Elements_by_Sign {
         }
 
         return result;
+    }
+
+    public int[] rearrangeArrayMostOptimized(int[] nums) {
+
+        int n = nums.length;
+
+        // implement two pointers to rearrange the positive and negative
+        int posIndx = 0, negIndx = 1;
+        int[] result = new int[n];
+
+        for (int i = 0; i < n; i+=2) {
+            int element = nums[i];
+            if (element > 0) {
+                result[posIndx] = element;
+                posIndx += 2;
+            }
+            else {
+                result[negIndx] = element;
+                negIndx += 2;
+            }
+
+            element = nums[i+1];
+            if (element > 0) {
+                result[posIndx] = element;
+                posIndx += 2;
+            }
+            else {
+                result[negIndx] = element;
+                negIndx += 2;
+            }
+
+        }
+
+        return result;
+    }
+
+
+    void placeElement(int[] result, int element, int posIndx, int negIndx) {
+
+        if (element > 0) {
+            result[posIndx] = element;
+            posIndx += 2;
+        }
+        else {
+            result[negIndx] = element;
+            negIndx += 2;
+        }
+
     }
 
 
