@@ -40,7 +40,7 @@ The stack will never hold more than 1 or 2 elements at any given moment.
 
 ---------------------
 
-StockSpannerOptimal: Monotonic Stack with Span Aggregation
+StockSpannerMostOptimal: Monotonic Stack with Span Aggregation
 
 TIME COMPLEXITY:
 - Total (N calls): O(N)
