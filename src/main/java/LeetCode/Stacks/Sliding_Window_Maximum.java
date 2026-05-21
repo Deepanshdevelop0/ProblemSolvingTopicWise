@@ -34,7 +34,7 @@ public class Sliding_Window_Maximum {
     }
 
 
-    public int[] maxSlidingWindowOptimal(int[] nums, int k) {
+    public int[] maxSlidingWindowOptimal1(int[] nums, int k) {
 
         int n = nums.length;
         int[] result = new int[n - k + 1];
@@ -63,5 +63,35 @@ public class Sliding_Window_Maximum {
         return result;
     }
 
+
+    public int[] maxSlidingWindowOptimal(int[] nums, int k) {
+
+        int n = nums.length;
+        int[] result = new int[n - k + 1];
+
+        Deque<Integer> dq = new ArrayDeque<>();
+
+        for (int i = 0; i < n; i++) {
+
+            // first clear the front
+            while (!dq.isEmpty() && dq.peekFirst() <= i - k) {
+                dq.pollFirst();
+            }
+
+            // then clear the last
+            while (!dq.isEmpty() && nums[dq.peekLast()] <= nums[i]) {
+                dq.pollLast();
+            }
+
+            dq.addLast(i);
+
+            if (i >= k-1 && !dq.isEmpty()) {
+                result[i - k + 1] = nums[dq.peekFirst()];
+            }
+
+        }
+
+        return result;
+    }
 
 }
