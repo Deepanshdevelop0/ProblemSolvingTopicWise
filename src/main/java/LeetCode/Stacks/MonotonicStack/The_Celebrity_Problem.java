@@ -10,7 +10,7 @@ public class The_Celebrity_Problem {
         int[][] mat = {{1, 1, 0}, {0, 1, 0}, {0, 1, 1}};
         int[][] mat1 = {{1, 1}, {1, 1}};
 
-        System.out.println(classObj.celebrityOptimal(mat1));
+        System.out.println(classObj.celebrityAbsoluteOptimal(mat));
     }
 
 
@@ -81,6 +81,69 @@ public class The_Celebrity_Problem {
         }
 
         return celebrity;
+    }
+
+
+    public int celebrityMoreOptimal(int mat[][]) {
+
+        int persons = mat.length;
+        int low = 0, high = persons - 1;
+
+        while (low < high) {
+            // both know each other or both dont know each other, then we can ignore both of them
+            if (mat[low][high] == mat[high][low]) {
+                low++;
+                high--;
+            } else if (mat[low][high] == 1) {
+                // low knows high, then low cannot be celebrity, but high can be celebrity
+                low++;
+            }
+            else {
+                // low does not know high, then high cannot be celebrity, but low can be celebrity
+                high--;
+            }
+        }
+
+        int celebrity = low;
+
+        for (int i = 0; i < persons; i++) {
+
+            if (i == celebrity) continue;
+
+            if (mat[i][celebrity] != 1 || mat[celebrity][i] != 0) {
+                return -1;
+            }
+        }
+
+        return (low == high) ? celebrity : -1;
+    }
+
+
+    public int celebrityAbsoluteOptimal(int mat[][]) {
+
+        int persons = mat.length;
+        if (persons <= 1) return 0;
+
+        int celebrity = 0;
+
+        for (int i = 1; i < persons; i++) {
+            if (mat[celebrity][i] == 1) {
+                // celebrity knows i, then celebrity cannot be celebrity, but i can be celebrity
+                celebrity = i;
+            }
+        }
+
+        for (int i = 0; i < persons; i++) {
+            if (i == celebrity) continue;
+
+            // If candidate knows 'i' OR 'i' does not know candidate, return -1
+            if (mat[celebrity][i] == 1 || mat[i][celebrity] == 0) {
+                return -1;
+            }
+        }
+
+        return celebrity;
+
     }
 
 
