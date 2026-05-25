@@ -5,7 +5,7 @@ import java.util.HashMap;
 public class LRU_CACHE {
     public static void main(String[] args) {
 
-        LRUCache lruCache = new LRUCache(2);
+        LRU_Cache lruCache = new LRU_Cache(2);
         lruCache.put(1, 1); // cache is {1=1}
         lruCache.put(2, 2); // cache is {1=1, 2=2}
         System.out.println(lruCache.get(1));    // return 1
@@ -20,14 +20,14 @@ public class LRU_CACHE {
 
 }
 
-class LRUCache {
+class LRU_Cache {
 
     private Node head, tail;
     private HashMap<Integer, Node> cacheMap;
 
     private Integer capacity;
 
-    public LRUCache(int capacity) {
+    public LRU_Cache(int capacity) {
         this.capacity = capacity;
         head = null;
         tail = null;
