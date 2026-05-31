@@ -45,10 +45,10 @@ public class Maximum_Number_of_Items_For_Sale_I {
         }
 
         int maxTotalItems = 0;
-        for (int w = 0; w <= budget; w++) {
-            if (dp[w] != -1) {
-                int extraCopies = (budget - w) / minPrice;
-                int currentTotal = dp[w] + extraCopies;
+        for (int price = 0; price <= budget; price++) {
+            if (dp[price] != -1) {
+                int extraCopies = (budget - price) / minPrice;
+                int currentTotal = dp[price] + extraCopies;
                 maxTotalItems = Math.max(maxTotalItems, currentTotal);
             }
         }
