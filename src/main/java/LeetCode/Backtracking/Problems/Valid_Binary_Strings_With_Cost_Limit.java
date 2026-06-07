@@ -14,7 +14,6 @@ public class Valid_Binary_Strings_With_Cost_Limit {
         }
     }
 
-
     public List<String> generateValidStrings(int n, int k) {
         StringBuilder sb = new StringBuilder();
         List<String> res = new ArrayList<>();
