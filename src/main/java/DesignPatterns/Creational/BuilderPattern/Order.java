@@ -23,7 +23,7 @@ public class Order {
                 ", itemId='" + itemId + '\'' +
                 ", itemName='" + name + '\'' +
                 ", quantity='" + quantity + '\'' +
-                ", sku='" + sku + '\'' + "";
+                ", sku='" + sku + '\'';
     }
 
     public static class Builder {
