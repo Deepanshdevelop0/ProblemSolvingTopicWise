@@ -1,4 +1,4 @@
-package LeetCode.BinarySearch;
+package LeetCode.BinarySearch.OneD_Array;
 
 public class Times_the_Array_Has_Been_Rotated {
 
