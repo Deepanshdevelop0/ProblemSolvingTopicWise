@@ -6,7 +6,7 @@ public class Capacity_To_Ship_Packages_Within_D_Days {
 
         Capacity_To_Ship_Packages_Within_D_Days classObj = new Capacity_To_Ship_Packages_Within_D_Days();
 
-        int res1 = classObj.shipWithinDays(new int[]{44,22,33,11,1}, 5);
+        int res1 = classObj.shipWithinDays(new int[]{1,2,3,4,5,6,7,8,9,10}, 5);
         System.out.println("result : " + res1);
     }
 
@@ -22,11 +22,33 @@ public class Capacity_To_Ship_Packages_Within_D_Days {
         while (low < high) {
             long mid = low + (high - low) / 2;
 
-
-
+            if (canShipWithinDays(weights, days, mid)) {
+                high = mid;
+            }
+            else {
+                low = mid + 1;
+            }
         }
 
+        return (int) low;
+    }
 
+    private boolean canShipWithinDays(int[] weights, int days, long mid) {
+
+        long currentCapacity = 0;
+        int currentDay = 1;
+
+        for (int weight : weights) {
+            if (currentCapacity + weight > mid) {
+                currentDay++;
+                currentCapacity = weight;
+            }
+            else {
+                currentCapacity += weight;
+            }
+        }
+
+        return currentDay <= days;
     }
 
 }
