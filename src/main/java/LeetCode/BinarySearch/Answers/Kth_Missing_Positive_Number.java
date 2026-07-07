@@ -2,6 +2,24 @@ package LeetCode.BinarySearch.Answers;
 
 public class Kth_Missing_Positive_Number {
 
+/*
+
+1. BruteForce : Linear until kth missing element is not found
+
+TC : O(n) : no of elements in array
+
+SC : O(1) : Constant Space
+
+---------------------------------------------------
+
+Better : Binary search on Answers
+
+TC : O(log n) : for binary search
+
+SC : O(1) : constant space
+
+*/
+
     public static void main(String[] args) {
         Kth_Missing_Positive_Number classObj = new Kth_Missing_Positive_Number();
 
