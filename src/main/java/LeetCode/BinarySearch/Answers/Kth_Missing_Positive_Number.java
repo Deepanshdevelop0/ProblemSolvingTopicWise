@@ -39,6 +39,7 @@ public class Kth_Missing_Positive_Number {
         return last + (k - missing);
     }
 
+
     public int findKthPositiveBetter(int[] arr, int k) {
 
         int low = 0, high = arr.length - 1;
