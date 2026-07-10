@@ -1,6 +1,6 @@
 package LeetCode.BinarySearch.Answers;
 
-public class Split_Array_Largest_Sum {
+public class The_Painters_Partition_Problem_II {
 
 /*
 
@@ -27,25 +27,19 @@ TC : O(N * log(sum(arr) - max(arr) + 1)) : for binary search
 SC : O(1) : constant space variables
 
 */
+
     public static void main(String[] args) {
-        Split_Array_Largest_Sum classObj = new Split_Array_Largest_Sum();
-        int res = classObj.splitArrayBinarySearch(new int[]{7,2,5,10,8}, 2);
-        System.out.println("result = " + res);
-
-        int res1 = classObj.splitArrayBinarySearch(new int[]{1,2,3,4,5}, 3);
-        System.out.println("result = " + res1);
-
-        int res2 = classObj.splitArrayBinarySearch(new int[]{1,2,3,4,5}, 1);
-        System.out.println("result = " + res2);
+        The_Painters_Partition_Problem_II classObj = new The_Painters_Partition_Problem_II();
+        int res = classObj.minTimeBinarySearch(new int[]{5, 10, 30, 20, 15}, 3);
+        System.out.println("result : " + res);
     }
 
-    public int splitArrayBruteForce(int[] nums, int k) {
-
-        if (k > nums.length) return -1;
+    public int minTimeBruteForce(int[] arr, int k) {
+        if (k > arr.length) return -1;
 
         long max = 0, total = 0; // just for understanding, otherwise would have named it low and high
 
-        for (int i : nums) {
+        for (int i : arr) {
             max = Math.max(max, i);
             total += i;
         }
@@ -53,22 +47,23 @@ SC : O(1) : constant space variables
         long low = max, high = total;
 
         while (low <= high) {
-            if (canSplit(nums, k, low)) {
+
+            if (canPaintAllBoards(arr, k, low)) {
                 return (int) low;
             }
+
             low++;
         }
 
         return -1;
     }
 
-    public int splitArrayBinarySearch(int[] nums, int k) {
-
-        if (k > nums.length) return -1;
+    public int minTimeBinarySearch(int[] arr, int k) {
+        if (k > arr.length) return -1;
 
         long max = 0, total = 0; // just for understanding, otherwise would have named it low and high
 
-        for (int i : nums) {
+        for (int i : arr) {
             max = Math.max(max, i);
             total += i;
         }
@@ -79,7 +74,7 @@ SC : O(1) : constant space variables
 
             long mid = low + (high - low) / 2;
 
-            if (canSplit(nums, k, mid)) {
+            if (canPaintAllBoards(arr, k, mid)) {
                 high = mid - 1;
             }
             else {
@@ -90,24 +85,36 @@ SC : O(1) : constant space variables
         return (int) low;
     }
 
-    public boolean canSplit(int[] nums, int k, long max) {
+//    30 - 80 : 55
+//    30 - 54 : 42
+//    30 - 41 : 35
+//    30 - 34 : 32
+//    33 - 34 : 33
+//    34 - 34 : 34
+//    35 - 34 (while loop ends here)
 
-        long currSum = 0, currK = 1;
 
-        for (int i : nums) {
-            if (currSum + i > max) {
-                currSum = i;
-                currK++;
-                if (currK > k) {
+    public boolean canPaintAllBoards(int[] arr, int k, long maxLength) {
+
+        long currentLength = 0, currentBoards = 1;
+
+        for (int i : arr) {
+
+            if (currentLength + i > maxLength) {
+                currentLength = i;
+                currentBoards++;
+
+                if (currentBoards > k) {
                     return false;
                 }
                 continue;
             }
 
-            currSum += i;
+            currentLength += i;
         }
 
         return true;
     }
+
 
 }

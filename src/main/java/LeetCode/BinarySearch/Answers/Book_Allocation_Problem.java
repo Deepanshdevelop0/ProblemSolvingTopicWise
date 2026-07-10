@@ -43,12 +43,14 @@ SC : O(1) : constant space variables
             return -1;
         }
 
-        long low = 0, high = 0;
+        long max = 0, total = 0; // just for understanding, otherwise would have named it low and high
 
         for (int i : arr) {
-            low = Math.max(low, i);
-            high += i;
+            max = Math.max(max, i);
+            total += i;
         }
+
+        long low = max, high = total;
 
         while (low <= high) {
 
@@ -68,12 +70,14 @@ SC : O(1) : constant space variables
             return -1;
         }
 
-        long low = 0, high = 0;
+        long max = 0, total = 0; // just for understanding, otherwise would have named it low and high
 
         for (int i : arr) {
-            low = Math.max(low, i);
-            high += i;
+            max = Math.max(max, i);
+            total += i;
         }
+
+        long low = max, high = total;
 
         while (low < high) {
             long mid = low + (high - low) / 2;
