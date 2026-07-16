@@ -10,7 +10,7 @@ public class Find_a_Peak_Element_II {
 //        System.out.println("Result : [" + res[0] + "," + res[1] + "]");
 
         int[] res1 = classObj.findPeakGrid(new int[][]{
-                {1,4}, {2,2}
+                {1, 4}, {3, 2}
         });
 
         System.out.println("Result : [" + res1[0] + "," + res1[1] + "]");
@@ -46,18 +46,16 @@ public class Find_a_Peak_Element_II {
 
     public int findMaxElement(int[][] mat, int col) {
 
-        int m = mat.length;
-        int indx = -1, max = Integer.MIN_VALUE;
+        int max = -1, maxIndx = -1;
 
-        for (int i = 0; i < m; i++) {
-            if (mat[i][col] > max) {
-                max = mat[i][col];
-                indx = i;
+        for (int row = 0; row < mat.length; row++) {
+            if (mat[row][col] > max) {
+                max = mat[row][col];
+                maxIndx = row;
             }
         }
 
-        return indx;
+        return maxIndx;
     }
-
 
 }
