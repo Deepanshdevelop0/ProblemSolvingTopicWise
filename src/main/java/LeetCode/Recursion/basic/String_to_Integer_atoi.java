@@ -5,14 +5,16 @@ public class String_to_Integer_atoi {
     public static void main(String[] args) {
         String_to_Integer_atoi classObj = new String_to_Integer_atoi();
 
-        System.out.println("case 1 : " + classObj.myAtoi("  --42"));
-        System.out.println("case 2 : " + classObj.myAtoi("42"));
-        System.out.println("case 2 : " + classObj.myAtoi("+-42"));
-        System.out.println("case 2 : " + classObj.myAtoi("42w8957298"));
+        System.out.println("case 1 : " + classObj.myAtoiRecursive("  --42"));
+        System.out.println("case 2 : " + classObj.myAtoiRecursive("42"));
+        System.out.println("case 3 : " + classObj.myAtoiRecursive("+-42"));
+        System.out.println("case 4 : " + classObj.myAtoiRecursive("42w8957298"));
+        System.out.println("case 5 : " + classObj.myAtoiRecursive("42  8957298"));
+        System.out.println("case 5 : " + classObj.myAtoiRecursive("-91283472332"));
 
     }
 
-    public int myAtoi(String s) {
+    public int myAtoiIterative(String s) {
 
         int i = 0, len = s.length();
 
@@ -49,6 +51,44 @@ public class String_to_Integer_atoi {
         }
 
         return sign * res;
+    }
+
+
+    public int myAtoiRecursive(String s) {
+
+        int i = 0, len = s.length();
+
+        while (i < len && s.charAt(i) == ' ') {
+            i++;
+        }
+
+        if (i >= len) {
+            return 0;
+        }
+
+        int sign = 1;
+        if (s.charAt(i) == '+' || s.charAt(i) == '-') {
+            sign = (s.charAt(i) == '-') ? -1 : 1;
+            i++;
+        }
+
+        return recursiveHelper(s, i, len, sign, 0);
+    }
+
+    public int recursiveHelper(String s, int i, int len, int sign, long res) {
+
+        if (i >= len || s.charAt(i) < '0' || s.charAt(i) > '9') {
+            return (int) res * sign;
+        }
+
+        int digit = s.charAt(i) - '0';
+        res = res * 10 + digit;
+
+        if (res > Integer.MAX_VALUE || res < Integer.MIN_VALUE) {
+            return (sign == 1) ? Integer.MAX_VALUE : Integer.MIN_VALUE;
+        }
+
+        return recursiveHelper(s, i+1, len, sign, res);
     }
 
 
