@@ -5,7 +5,20 @@ import java.util.*;
 public class ReverseStack {
 
     public static void main(String[] args) {
+        ReverseStack classObj = new ReverseStack();
 
+        Stack<Integer> st = new Stack<>();
+        st.add(1);
+        st.add(2);
+        st.add(3);
+        st.add(4);
+
+        reverseStackIterative(st);
+
+        int i = 0;
+        while (!st.isEmpty()) {
+            System.out.println(i++ + " : " + st.pop());
+        }
     }
 
     public static void reverseStackIterative(Stack<Integer> st) {
@@ -23,15 +36,29 @@ public class ReverseStack {
     }
 
     public static void reverseStackRecursive(Stack<Integer> st) {
-        Stack<Integer> res = new Stack<>();
-
-        while (!st.isEmpty()) {
-            res.add(st.pop());
+        if (st.isEmpty()) {
+            return;
         }
 
-        Collections.copy(st, res);
+        int peek = st.pop();
+
+        reverseStackRecursive(st);
+
+        addToLast(st, peek);
     }
 
+    public static void addToLast(Stack<Integer> st, int peek) {
+        if (st.isEmpty()) {
+            st.push(peek);
+            return;
+        }
+
+        int element = st.pop();
+
+        addToLast(st, peek);
+
+        st.push(element);
+    }
 
 
 }
