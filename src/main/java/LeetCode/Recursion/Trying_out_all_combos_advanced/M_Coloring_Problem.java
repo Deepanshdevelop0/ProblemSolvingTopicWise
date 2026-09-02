@@ -31,40 +31,47 @@ public class M_Coloring_Problem {
 
         List<List<Integer>> adjList = new ArrayList<>();
 
-        for (int i = 0; i < v; i++) {
+        for (int i = 0; i < 10; i++) {
             adjList.add(new ArrayList<>());
         }
 
-        for (int[] vertices : edges) {
-            int U = vertices[0], V = vertices[1];
+        for (int[] vertex : edges) {
+            int U = vertex[0], V = vertex[1];
             adjList.get(U).add(V);
+            adjList.get(V).add(U);
         }
 
-        boolean[] visited = new boolean[v];
-        int color = 1;
+        int[] colors = new int[v];
 
-        for (int i = 0; i < v; i++) {
-            if (!adjList.get(i).isEmpty() && !visited[i]) {
-                if (!solve(i, color, m, visited, adjList)) {
-                    return false;
+        return solve(0, v, m, colors, adjList);
+    }
+
+    public boolean solve(int vertex, int v, int m, int[] colors, List<List<Integer>> adjList) {
+        if (vertex == v) {
+            return true;
+        }
+
+        for (int color = 1; color <= m; color++) {
+            if (isSafe(vertex, color, colors, adjList)) {
+
+                colors[vertex] = color;
+
+                if (solve(vertex + 1, v, m, colors, adjList)) {
+                    return true;
                 }
+
+                colors[vertex] = 0;
             }
         }
 
-        return true;
+        return false;
     }
 
-    public boolean solve(int vertex, int color, int m, boolean[] visited, List<List<Integer>> adjList) {
+    public boolean isSafe(int vertex, int color, int[] colors, List<List<Integer>> adjList) {
+        List<Integer> neighbors = adjList.get(vertex);
 
-        if (visited[vertex]) return true;
-        if (color > m) return false;
-
-        visited[vertex] = true;
-
-        List<Integer> subList = adjList.get(vertex);
-
-        for (Integer currVertex : subList) {
-            if (!solve(currVertex, color + 1, m, visited, adjList)) {
+        for (int neighbor : neighbors) {
+            if (colors[neighbor] == color) {
                 return false;
             }
         }
