@@ -12,60 +12,45 @@ public class Expression_Add_Operators {
 
     public List<String> addOperators(String num, int target) {
         List<String> res = new ArrayList<>();
-        int curr = num.charAt(0) - '0';
 
-        StringBuilder expr = new StringBuilder();
-        expr.append(curr);
-
-        solve(expr, curr, 1, num.length(), num, target, res);
+        solve(res, num, target, num.length(), new StringBuilder(), 0, 0, 0);
 
         return res;
     }
 
-    public void solve(StringBuilder expr, int curr, int indx, int n, String num, int target, List<String> res) {
-        if (indx == n && curr == target) {
-            res.add(expr.toString());
+    public void solve(List<String> res, String num, long target, int n, StringBuilder expr, int indx, long eval, long tail) {
+        if (indx == n) {
+            if (eval == target) res.add(expr.toString());
             return;
         }
-        if (indx == n) return;
 
-        int digit = num.charAt(indx) - '0';
+        for (int i = indx; i < n; i++) {
 
-        if (curr <= target) {
+            // Rule: No numbers with leading zeros (e.g., "05" is invalid, but "0" is okay)
+            if (i != indx && num.charAt(indx) == '0') break;
 
-            // '+' category
+            String currentStr = num.substring(indx, i + 1);
+            Long curr = Long.valueOf(currentStr);
 
-            expr.append('+').append(digit);
-            curr += digit;
+            int lengthBeforeAdding = expr.length();
 
-            solve(expr, curr, indx+1, n, num, target, res);
+            if (indx == 0) {
+                solve(res, num, target, n, expr.append(curr), i + 1, eval + curr, curr);
+                expr.setLength(lengthBeforeAdding);
+            } else {
+                expr.append("+").append(curr);
+                solve(res, num, target, n, expr, i + 1, eval + curr, curr);
+                expr.setLength(lengthBeforeAdding);
 
-            curr -= digit;
-            expr.deleteCharAt(expr.length()-1);
-            expr.deleteCharAt(expr.length()-1);
+                expr.append("-").append(curr);
+                solve(res, num, target, n, expr, i + 1, eval - curr, -curr);
+                expr.setLength(lengthBeforeAdding);
 
-            // '*' category
+                expr.append("*").append(curr);
+                solve(res, num, target, n, expr, i + 1, eval - tail + (tail * curr), tail * curr);
+                expr.setLength(lengthBeforeAdding);
 
-            expr.append('*').append(digit);
-            curr *= digit;
-
-            solve(expr, curr, indx+1, n, num, target, res);
-
-            expr.deleteCharAt(expr.length()-1);
-            expr.deleteCharAt(expr.length()-1);
-        }
-        else {
-
-            // '-' category
-
-            expr.append('-').append(digit);
-            curr -= digit;
-
-            solve(expr, curr, indx+1, n, num, target, res);
-
-            expr.deleteCharAt(expr.length()-1);
-            expr.deleteCharAt(expr.length()-1);
-
+            }
         }
 
     }
