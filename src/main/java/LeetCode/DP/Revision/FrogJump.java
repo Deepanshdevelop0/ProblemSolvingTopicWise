@@ -33,7 +33,7 @@ public class FrogJump {
     }
 
     public boolean crossRecursively(int currIndx, int k, int[] stones, Map<Integer, Integer> stoneIndxMap) {
-        if (currIndx == stones.length-1) {
+        if (currIndx == stones.length - 1) {
             return true;
         }
 
@@ -49,9 +49,9 @@ public class FrogJump {
             res = crossRecursively(nextIndx, k + 1, stones, stoneIndxMap);
         }
 
-        if (!res && k-1 > 0 && stoneIndxMap.containsKey(stones[currIndx] + (k - 1))) {
-            int nextIndx = stoneIndxMap.get(stones[currIndx] + (k-1));
-            res = crossRecursively(nextIndx, k-1, stones, stoneIndxMap);
+        if (!res && k - 1 > 0 && stoneIndxMap.containsKey(stones[currIndx] + (k - 1))) {
+            int nextIndx = stoneIndxMap.get(stones[currIndx] + (k - 1));
+            res = crossRecursively(nextIndx, k - 1, stones, stoneIndxMap);
         }
 
         return res;
@@ -92,12 +92,12 @@ public class FrogJump {
 
         if (!res && stoneIndxMap.containsKey(stones[currIndx] + (k + 1))) {
             int nextIndx = stoneIndxMap.get(stones[currIndx] + (k + 1));
-            res = crossRecursivelyMemoization(nextIndx, k+1, stones, stoneIndxMap, dp);
+            res = crossRecursivelyMemoization(nextIndx, k + 1, stones, stoneIndxMap, dp);
         }
 
-        if (!res && k-1 > 0 && stoneIndxMap.containsKey(stones[currIndx] + (k - 1))) {
+        if (!res && k - 1 > 0 && stoneIndxMap.containsKey(stones[currIndx] + (k - 1))) {
             int nextIndx = stoneIndxMap.get(stones[currIndx] + (k - 1));
-            res = crossRecursivelyMemoization(nextIndx, k-1, stones, stoneIndxMap, dp);
+            res = crossRecursivelyMemoization(nextIndx, k - 1, stones, stoneIndxMap, dp);
         }
 
         dp[currIndx][k] = res;
@@ -111,46 +111,42 @@ public class FrogJump {
         if (stones[1] != 1) return false;
         if (stones.length == 2) return true;
 
+        int n = stones.length;
+
         Map<Integer, Integer> stoneIndxMap = new HashMap<>();
 
-        for (int i = 0; i < stones.length; i++) {
+        for (int i = 0; i < n; i++) {
             stoneIndxMap.put(stones[i], i);
         }
 
-        Boolean[][] dp = new Boolean[stones.length][stones.length + 1];
+        boolean[][] dp = new boolean[n][n + 1];
 
-        return crossRecursivelyTabulation(1, 1, stones, stoneIndxMap, dp);
-    }
+        dp[0][0] = true;
 
-    public boolean crossRecursivelyTabulation(int currIndx, int k, int[] stones, Map<Integer, Integer> stoneIndxMap, Boolean[][] dp) {
-        if (currIndx == stones.length - 1) {
-            return true;
+        for (int i = 0; i < n; i++) {
+            for (int k = 0; k <= n; k++) {
+
+                if (dp[i][k]) {
+                    int[] nextJumps = new int[]{k - 1, k, k + 1};
+
+                    for (int jump : nextJumps) {
+                        if (jump > 0 && stoneIndxMap.containsKey(stones[i] + jump)) {
+                            int nextIndx = stoneIndxMap.get(stones[i] + jump);
+
+                            dp[nextIndx][jump] = true;
+                        }
+                    }
+                }
+            }
         }
 
-        if (dp[currIndx][k] != null) {
-            return dp[currIndx][k];
+        for (int k = 0; k <= n; k++) {
+            if (dp[n-1][k]) {
+                return true;
+            }
         }
 
-        boolean res = false;
-
-        if (stoneIndxMap.containsKey(stones[currIndx] + k)) {
-            int nextIndx = stoneIndxMap.get(stones[currIndx] + k);
-            res = crossRecursivelyTabulation(nextIndx, k, stones, stoneIndxMap, dp);
-        }
-
-        if (!res && stoneIndxMap.containsKey(stones[currIndx] + (k + 1))) {
-            int nextIndx = stoneIndxMap.get(stones[currIndx] + (k + 1));
-            res = crossRecursivelyTabulation(nextIndx, k+1, stones, stoneIndxMap, dp);
-        }
-
-        if (!res && k-1 > 0 && stoneIndxMap.containsKey(stones[currIndx] + (k - 1))) {
-            int nextIndx = stoneIndxMap.get(stones[currIndx] + (k - 1));
-            res = crossRecursivelyTabulation(nextIndx, k-1, stones, stoneIndxMap, dp);
-        }
-
-        dp[currIndx][k] = res;
-
-        return res;
+        return false;
     }
 
 }
