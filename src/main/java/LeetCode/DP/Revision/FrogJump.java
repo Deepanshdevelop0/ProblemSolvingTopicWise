@@ -14,7 +14,7 @@ public class FrogJump {
 
         int[] stones = new int[]{0, 1, 3, 5, 6, 8, 12, 17};
         int[] stones1 = new int[]{0, 1, 2, 3, 4, 8, 9, 11};
-        System.out.println(frogJump.canCrossTabulation(stones));
+        System.out.println(frogJump.canCrossTabulationOptimized(stones));
 
     }
 
@@ -141,12 +141,48 @@ public class FrogJump {
         }
 
         for (int k = 0; k <= n; k++) {
-            if (dp[n-1][k]) {
+            if (dp[n - 1][k]) {
                 return true;
             }
         }
 
         return false;
+    }
+
+
+    /* 4. Tabulation Optimized Approach */
+    public boolean canCrossTabulationOptimized(int[] stones) {
+        if (stones[1] != 1) return false;
+        if (stones.length == 2) return true;
+
+        int n = stones.length;
+
+        Map<Integer, Set<Integer>> stoneMap = new HashMap<>();
+
+        for (int i : stones) {
+            stoneMap.put(i, new HashSet<>());
+        }
+
+        stoneMap.get(0).add(0);
+
+        for (int i = 0; i < n; i++) {
+
+            int currStone = stones[i];
+            Set<Integer> jumpSet = stoneMap.get(currStone);
+
+            for (int k : jumpSet) {
+
+                int[] nextJumps = new int[]{k-1, k, k+1};
+
+                for (int jump : nextJumps) {
+                    if (jump > 0 && stoneMap.containsKey(currStone + jump)) {
+                        stoneMap.get(currStone + jump).add(jump);
+                    }
+                }
+            }
+        }
+
+        return !stoneMap.get(stones[n-1]).isEmpty();
     }
 
 }
