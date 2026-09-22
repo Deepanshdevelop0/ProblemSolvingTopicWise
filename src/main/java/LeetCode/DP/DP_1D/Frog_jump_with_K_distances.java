@@ -11,16 +11,19 @@ public class Frog_jump_with_K_distances {
 
         int[] heights = new int[]{10, 5, 20, 0, 15};
         int[] heights1 = new int[]{15, 4, 1, 14, 15};
-        System.out.println(frogJumpWithKDistances.frogJump(heights, 2));
+//        System.out.println(frogJumpWithKDistances.frogJump(heights, 2));
 //        System.out.println(frogJumpWithKDistances.frogJump(heights1, 3));
+
+        // tabulation test
+        System.out.println(frogJumpWithKDistances.frogJumpTabulation(heights1, 3));
 
     }
 
     public int frogJump(int[] heights, int k) {
         int n = heights.length;
-        int[] dp = new int[n+1];
+        int[] dp = new int[n + 1];
         Arrays.fill(dp, -1);
-        dp[n-1] = 0;
+        dp[n - 1] = 0;
 
 //        return jumpRecursive(heights, k, heights.length, 0);
         return jumpRecursiveMemoized(heights, k, heights.length, 0, dp);
@@ -58,6 +61,53 @@ public class Frog_jump_with_K_distances {
         }
 
         return dp[indx] = min;
+    }
+
+    public int frogJumpTabulation(int[] heights, int k) {
+
+        int n = heights.length;
+
+        int[] dp = new int[n];
+        dp[n-1] = 0;
+
+        for (int indx = n - 2; indx >= 0; indx--) {
+
+            int min = Integer.MAX_VALUE;
+
+            for (int i = 1; i <= k && i + indx < n; i++) {
+                int next = dp[indx + i];
+                int diff = Math.abs(heights[indx] - heights[indx + i]);
+                min = Math.min(min, next + diff);
+            }
+
+            dp[indx] = min;
+        }
+
+
+        return dp[0];
+    }
+    public int frogJumpTabulationOptimized(int[] heights, int k) {
+
+        int n = heights.length;
+
+        int[] dp = new int[n];
+        dp[n-1] = 0;
+
+        for (int indx = n - 2; indx >= 0; indx--) {
+
+            int min = Integer.MAX_VALUE;
+
+            for (int i = 1; i <= k && i + indx < n; i++) {
+                int next = dp[indx + i];
+                int diff = Math.abs(heights[indx] - heights[indx + i]);
+                min = Math.min(min, next + diff);
+            }
+
+            dp[indx] = min;
+        }
+
+
+        return dp[0];
     }
 
 }
