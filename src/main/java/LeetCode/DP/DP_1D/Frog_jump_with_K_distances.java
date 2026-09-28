@@ -15,7 +15,7 @@ public class Frog_jump_with_K_distances {
 //        System.out.println(frogJumpWithKDistances.frogJump(heights1, 3));
 
         // tabulation test
-        System.out.println(frogJumpWithKDistances.frogJumpTabulation(heights1, 3));
+        System.out.println(frogJumpWithKDistances.frogJumpTabulationOptimized(heights1, 3));
 
     }
 
@@ -86,28 +86,30 @@ public class Frog_jump_with_K_distances {
 
         return dp[0];
     }
+
     public int frogJumpTabulationOptimized(int[] heights, int k) {
 
         int n = heights.length;
 
-        int[] dp = new int[n];
-        dp[n-1] = 0;
+        int windowSize = Math.min(n, k);
+        int[] dp = new int[windowSize];
+        dp[(n-1) % windowSize] = 0;
 
-        for (int indx = n - 2; indx >= 0; indx--) {
+        for (int indx = n-2; indx >= 0; indx--) {
 
             int min = Integer.MAX_VALUE;
 
-            for (int i = 1; i <= k && i + indx < n; i++) {
-                int next = dp[indx + i];
-                int diff = Math.abs(heights[indx] - heights[indx + i]);
+            for (int i = 1; i <= k && indx + i < n; i++) {
+                int next = dp[(indx + i) % windowSize];
+                int diff = Math.abs(heights[indx] - heights[indx+i]);
                 min = Math.min(min, next + diff);
             }
 
-            dp[indx] = min;
+            dp[indx % windowSize] = min;
         }
-
 
         return dp[0];
     }
+
 
 }
