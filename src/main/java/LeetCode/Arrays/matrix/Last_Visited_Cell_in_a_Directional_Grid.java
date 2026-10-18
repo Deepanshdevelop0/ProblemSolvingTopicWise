@@ -55,7 +55,6 @@ public class Last_Visited_Cell_in_a_Directional_Grid {
             char curr = grid[r][c];
             grid[r][c] = 'X';
 
-
             switch (curr) {
                 case 'L' -> c -= 1;
                 case 'R' -> c += 1;
