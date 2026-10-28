@@ -6,6 +6,14 @@ import DesignPatterns.practice.Creational.Factory.service.PaymentRoutingService;
 
 public class MAIN {
 
+    /*
+
+    Your payment routing system handles transactions via Stripe, Razorpay, and PayPal.
+    Depending on the user's region and currency, the system must dynamically instantiate the correct payment processor at runtime.
+    How do you centralize this object creation logic without littering your code with complex if-else blocks?
+
+    */
+
     public static void main(String[] args) {
 
         PaymentFactoryRegistry registry = new PaymentFactoryRegistry();
