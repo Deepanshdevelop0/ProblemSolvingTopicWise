@@ -1,4 +1,4 @@
-package SystemDesign.DesignPatterns.Behavioral.ObserverPattern;
+package SystemDesign.DesignPatterns.Behavioral.Observer_Pattern;
 
 public interface Subject {
 
