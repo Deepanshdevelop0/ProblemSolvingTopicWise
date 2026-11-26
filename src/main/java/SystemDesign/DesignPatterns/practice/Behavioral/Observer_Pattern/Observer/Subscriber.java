@@ -21,6 +21,7 @@ public class Subscriber implements ISubscriber {
     @Override
     public void update(IChannel channel) {
         Video video = channel.getLatestVideo();
+
         System.out.println("Hey " + this.name + ", \n Uploaded new video : " + video.getName() + " by subscribed channel : " + channel.getName());
     }
 
